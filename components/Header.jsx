@@ -4,9 +4,9 @@ import styles from '../styles/Header.module.css';
 export default function Header() {
   return (
     <header className={styles.header}>
-      <div>
+      <div className={styles.logo}>
         <Link href='/'>
-          <a className={styles.logo}>DJ EVENTS</a>
+          DJ EVENTS
         </Link>
       </div>
       <nav>

@@ -11,8 +11,13 @@ html {
 }
 
 a {
-  color: #000;
+  color: #7a7a7a;
   text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover{
+  color: #900;
 }
 
 li {

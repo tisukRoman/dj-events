@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FaExclamationTriangle } from "react-icons/fa";
-import styles from '@/styles/404.module.css';
-import Layout from '@/components/Layout';
+import styles from './404.module.css';
+import { Layout } from '@/components/Layout';
 
 export default function DefaultPage() {
     return (

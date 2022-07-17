@@ -1,10 +1,10 @@
 import Head from 'next/head';
-import styles from '@/styles/Layout.module.css';
-import Footer from './Footer';
-import Header from './Header';
-import Main from './Main';
+import styles from './styles/Layout.module.css';
+import { Footer } from './Footer';
+import { Header } from './Header';
+import { Main } from './Main';
 
-export default function Layout(props) {
+export function Layout(props) {
   const { title, description, keywords, children } = props;
 
   return (

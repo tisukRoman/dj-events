@@ -8,16 +8,18 @@ export function Layout(props) {
   const { title, description, keywords, children } = props;
 
   return (
-    <Head>
-      <title>{title}</title>
-      <meta name='description' content={description} />
-      <meta name='keywords' content={keywords} />
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name='description' content={description} />
+        <meta name='keywords' content={keywords} />
+      </Head>
       <div className={styles.container}>
         <Header />
         <Main>{children}</Main>
         <Footer />
       </div>
-    </Head>
+    </>
   );
 }
 

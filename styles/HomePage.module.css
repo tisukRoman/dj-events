@@ -1,0 +1,10 @@
+.event_list {
+    margin: 0 auto;
+}
+
+@media (max-width: 840px){
+    .event_list {
+        max-width: 300px;
+    }
+    
+}

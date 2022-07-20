@@ -6,12 +6,10 @@ import { EventCard } from '@/components/EventCard';
 import styles from '@/styles/HomePage.module.css';
 
 export default function HomePage({ events }) {
-  console.log(events);
   return (
     <Layout>
       <Showcase />
       <PageTitle>Home</PageTitle>
-
       <div className={styles.event_list}>
         {events.map((event) => (
           <EventCard key={event.slug} event={event} />

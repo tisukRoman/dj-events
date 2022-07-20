@@ -1,9 +1,16 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Button from '../ui/Button/Button';
 import styles from './EventCard.module.css';
 
 export function EventCard({ event }) {
-  const { image, name, date, time } = event;
+  const { slug, image, name, date, time } = event;
+
+  const router = useRouter();
+
+  function goToDetails() {
+    router.push(`/events/${slug}`);
+  };
 
   return (
     <div className={styles.card}>
@@ -23,7 +30,7 @@ export function EventCard({ event }) {
         </div>
       </div>
       <div className={styles.button_wrapper}>
-        <Button>Details</Button>
+        <Button onClick={goToDetails}>Details</Button>
       </div>
     </div>
   );

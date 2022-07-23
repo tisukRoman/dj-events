@@ -1,15 +1,44 @@
 .button {
-    width: 100%;
-    height: 3em;
-    background-color: #ff4500;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-    border: none;
-    border-radius: 0.2em;
-    transition: 0.2s;
+  font-size: 1.2rem;
+  padding: 0 1em;
+  width: 100%;
+  display: block;
+  height: 3em;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.2em;
+  transition: 0.2s;
 }
 
-.button:hover{
-    opacity: 0.8;
+.button:hover {
+  opacity: 0.8;
+}
+
+.red {
+  background-color: #ff4500;
+}
+
+.blue {
+  background-color: #6495ed;
+}
+
+.outlined_red {
+  background-color: #fff;
+  color: #ff4500;
+}
+
+.outlined_blue {
+  background-color: #fff;
+  color: #6495ed;
+}
+
+
+.outlined_blue:hover{
+  background-color: antiquewhite;
+}
+
+.outlined_red:hover{
+  background-color: antiquewhite;
 }

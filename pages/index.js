@@ -11,8 +11,8 @@ export default function HomePage({ events }) {
       <Showcase />
       <PageTitle>Home</PageTitle>
       <div className={styles.event_list}>
-        {events.map((event) => (
-          <EventCard key={event.slug} event={event} />
+        {events.map(({ attributes }) => (
+          <EventCard key={attributes.slug} event={attributes} />
         ))}
       </div>
     </Layout>
@@ -20,8 +20,8 @@ export default function HomePage({ events }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/events`);
-  const events = await res.json();
+  const res = await fetch(`${API_URL}/api/events?populate=*`);
+  const { data: events } = await res.json();
 
   return {
     props: { events },

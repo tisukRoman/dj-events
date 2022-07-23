@@ -3,11 +3,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { localeDate } from 'helpers/localeDate';
 import { API_URL } from '@/config/index';
-import styles from '@/styles/EventDetails.module.css';
 import { Layout } from '@/components/Layout';
 import { InfoItem } from '@/components/ui/InfoItem';
 import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
+import { AiFillEdit, AiFillDelete, AiOutlineArrowLeft } from 'react-icons/ai';
+import styles from '@/styles/EventDetails.module.css';
 
 export default function EventDetails({ event }) {
   const { date, time, name, image, performers, description, venue, address } =
@@ -26,12 +27,12 @@ export default function EventDetails({ event }) {
         <div className={styles.button_group}>
           <div>
             <Button variant='outlined' color='blue'>
-              Edit Event
+              <AiFillEdit /> Edit Event
             </Button>
           </div>
           <div>
             <Button variant='outlined' color='red'>
-              Delete Event
+              <AiFillDelete /> Delete Event
             </Button>
           </div>
         </div>
@@ -52,7 +53,7 @@ export default function EventDetails({ event }) {
         <InfoItem title={`Venue: ${venue}`}>{address}</InfoItem>
         <div className={styles.back_button}>
           <Button onClick={goBack} variant='outlined' color='blue'>
-            Go Back
+            <AiOutlineArrowLeft /> Go Back
           </Button>
         </div>
       </div>

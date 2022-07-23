@@ -4,14 +4,14 @@ import { EventCard } from '@/components/EventCard';
 import { Layout } from '@/components/Layout';
 import { PageTitle } from '@/components/ui/PageTitle';
 
-export default function EventsPage({ events }) {
+export default function SearchPage({ events }) {
   return (
     <Layout>
-      <PageTitle>Events</PageTitle>
+      <PageTitle>Search Results:</PageTitle>
       <div className='event_list'>
-        {events.map((event) => (
+        {events.length ? events.map((event) => (
           <EventCard key={event.slug} event={event} />
-        ))}
+        )) : <h3>No such events...</h3>}
       </div>
     </Layout>
   );
@@ -26,9 +26,28 @@ export async function getServerSideProps(ctx) {
       populate: ['image'],
       sort: ['date'],
       filters: {
-        name: {
-          $containsi: term,
-        },
+        $or: [
+          {
+            name: {
+              $containsi: term,
+            },
+          },
+          {
+            performers: {
+              $containsi: term,
+            },
+          },
+          {
+            description: {
+              $containsi: term,
+            },
+          },
+          {
+            venue: {
+              $containsi: term,
+            },
+          },
+        ],
       },
     },
     {

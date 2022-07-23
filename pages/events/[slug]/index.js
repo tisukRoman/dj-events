@@ -1,3 +1,4 @@
+import qs from 'qs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { localeDate } from 'helpers/localeDate';
@@ -76,9 +77,21 @@ export async function getStaticPaths() {
 export async function getStaticProps(ctx) {
   const { slug } = ctx.params;
 
-  const res = await fetch(
-    `${API_URL}/api/events?filters[slug][$eq]=${slug}&populate=*`
+  const query = qs.stringify(
+    {
+      populate: ['image'],
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
   );
+
+  const res = await fetch(`${API_URL}/api/events?${query}`);
   const { data } = await res.json();
 
   return {

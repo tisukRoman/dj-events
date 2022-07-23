@@ -1,0 +1,24 @@
+.search_bar {
+  margin: 1em;
+  width: 30em;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.search_input {
+  display: block;
+  width: 30em;
+  height: 3em;
+  padding: 0.5em;
+}
+
+.search_button {
+  width: 5em;
+  height: 3em;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 0.2em;
+}

@@ -17,15 +17,18 @@ export default function EventsPage({ events }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(ctx) {
+  const { term } = ctx.query;
+
   const query = qs.stringify(
     {
       fields: ['slug', 'name', 'date', 'time'],
       populate: ['image'],
       sort: ['date'],
-      pagination: {
-        start: 0,
-        limit: 10,
+      filters: {
+        name: {
+          $containsi: term,
+        },
       },
     },
     {
@@ -39,6 +42,5 @@ export async function getStaticProps() {
 
   return {
     props: { events },
-    revalidate: 1,
   };
 }

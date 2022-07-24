@@ -10,9 +10,12 @@ export function Header() {
       </div>
       <SearchBar />
       <nav>
-        <ul>
+        <ul className={styles.ul}>
           <li>
             <Link href='/events'>Events</Link>
+          </li>
+          <li>
+            <Link href='/events/add'>Add Event</Link>
           </li>
         </ul>
       </nav>

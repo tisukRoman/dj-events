@@ -1,25 +1,19 @@
 import qs from 'qs';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { localeDate } from 'helpers/localeDate';
 import { API_URL } from '@/config/index';
 import { Layout } from '@/components/Layout';
 import { InfoItem } from '@/components/ui/InfoItem';
 import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
-import { AiFillEdit, AiFillDelete, AiOutlineArrowLeft } from 'react-icons/ai';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import styles from '@/styles/EventDetails.module.css';
+import { BackButton } from '@/components/BackButton';
 
 export default function EventDetails({ event }) {
   const { date, time, name, image, performers, description, venue, address } =
     event.attributes;
   const imageURL = image.data.attributes.formats.large.url;
-
-  const router = useRouter();
-
-  function goBack() {
-    router.back();
-  }
 
   return (
     <Layout>
@@ -52,9 +46,7 @@ export default function EventDetails({ event }) {
         <InfoItem title='Description:'>{description}</InfoItem>
         <InfoItem title={`Venue: ${venue}`}>{address}</InfoItem>
         <div className={styles.back_button}>
-          <Button onClick={goBack} variant='outlined' color='blue'>
-            <AiOutlineArrowLeft /> Go Back
-          </Button>
+          <BackButton />
         </div>
       </div>
     </Layout>

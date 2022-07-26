@@ -11,12 +11,22 @@ export default function AddEventPage() {
   const router = useRouter();
 
   async function onSubmit(data) {
-    const slug = data.name.toLowerCase().split(' ').join('-');
-    const submitData = { data: {...data, slug} };
+    debugger;
+    data.slug = data.name.toLowerCase().split(' ').join('-');
+
+    const textEntries = Object.entries(data).filter(
+      ([key, v]) => key !== 'image'
+    );
+
+    const formData = new FormData();
+
+    formData.append('image', data.image);
+
+    textEntries.forEach(([key, value]) => formData.append(key, value));
 
     const res = await fetch(`${API_URL}/api/events`, {
       method: 'POST',
-      body: JSON.stringify(submitData),
+      body: JSON.stringify({data: formData}),
       headers: {
         'Content-Type': 'application/json',
       },

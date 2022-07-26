@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import styles from './EventForm.module.css';
+import { FileInput } from '../FileInput';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name required'),
@@ -18,13 +19,14 @@ const validationSchema = yup.object({
 
 export function EventForm({ onSubmit, defaultValues }) {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(validationSchema),
-    defaultValues
+    defaultValues,
   });
 
   return (
@@ -81,6 +83,7 @@ export function EventForm({ onSubmit, defaultValues }) {
           id='description'
         ></textarea>
       </div>
+      <FileInput control={control} name='image' />
       <div className={styles.submit_button}>
         <Button type='submit'>Submit</Button>
       </div>

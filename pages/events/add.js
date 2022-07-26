@@ -11,11 +11,12 @@ export default function AddEventPage() {
   const router = useRouter();
 
   async function onSubmit(data) {
-    console.log({ data: {...data, slug: 'erkvmkdssd,'} });
+    const slug = data.name.toLowerCase().split(' ').join('-');
+    const submitData = { data: {...data, slug} };
 
     const res = await fetch(`${API_URL}/api/events`, {
       method: 'POST',
-      body: JSON.stringify(),
+      body: JSON.stringify(submitData),
       headers: {
         'Content-Type': 'application/json',
       },

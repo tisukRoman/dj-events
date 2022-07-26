@@ -2,6 +2,7 @@ import qs from 'qs';
 import Image from 'next/image';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { localeDate } from 'helpers/localeDate';
+import { getImgUrl } from 'helpers/getImgUrl';
 import { API_URL } from '@/config/index';
 import { Layout } from '@/components/Layout';
 import { InfoItem } from '@/components/ui/InfoItem';
@@ -13,8 +14,6 @@ import styles from '@/styles/EventDetails.module.css';
 export default function EventDetails({ event }) {
   const { date, time, name, image, performers, description, venue, address } =
     event;
-
-  const imageURL = image.data.attributes.formats.large.url;
 
   return (
     <Layout>
@@ -37,7 +36,7 @@ export default function EventDetails({ event }) {
         <PageTitle>{name}</PageTitle>
         <div className={styles.image_wrapper}>
           <Image
-            src={image ? imageURL : '/images/event-default.png'}
+            src={getImgUrl(image, 'large', '/images/event-default.png')}
             alt='Event Picture'
             layout='fill'
             objectFit='cover'

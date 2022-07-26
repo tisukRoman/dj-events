@@ -1,5 +1,6 @@
 import qs from 'qs';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { localeDate } from 'helpers/localeDate';
 import { getImgUrl } from 'helpers/getImgUrl';
@@ -13,7 +14,21 @@ import styles from '@/styles/EventDetails.module.css';
 
 export default function EventDetails({ event }) {
   const { date, time, name, image, performers, description, venue, address } =
-    event;
+    event.attributes;
+
+  const router = useRouter();
+
+  async function onDelete() {
+    const res = await fetch(`${API_URL}/api/events/${event.id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      router.push('/events');
+    } else {
+      alert('Could not delete this event');
+    }
+  }
 
   return (
     <Layout>
@@ -25,7 +40,7 @@ export default function EventDetails({ event }) {
             </Button>
           </div>
           <div className={styles.button}>
-            <Button variant='outlined' color='red'>
+            <Button onClick={onDelete} variant='outlined' color='red'>
               <AiFillDelete /> Delete Event
             </Button>
           </div>
@@ -85,7 +100,7 @@ export async function getStaticProps(ctx) {
   const { data } = await res.json();
 
   return {
-    props: { event: data.attributes },
+    props: { event: data },
     revalidate: 1,
   };
 }

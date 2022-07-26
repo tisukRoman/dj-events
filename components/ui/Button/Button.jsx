@@ -9,12 +9,10 @@ const styleMap = {
 
 export function Button(props) {
   const {
-    onClick = () => {},
     children = 'default button',
-    disabled = false,
     variant = 'filled',
     color = 'red',
-    type = 'button'
+    type = 'button',
   } = props;
 
   const styleKey = `${variant}-${color}`;
@@ -22,9 +20,8 @@ export function Button(props) {
   return (
     <button
       className={`${styles.button} ${styleMap[styleKey]}`}
-      onClick={onClick}
-      disabled={disabled}
       type={type}
+      {...props}
     >
       {children}
     </button>

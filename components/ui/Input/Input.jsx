@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
 import styles from './Input.module.css';
 
-const Input = forwardRef(function Inp(props, ref) {
+/* eslint-disable */
+export const Input = forwardRef((props, ref) => {
   const { name, title, type = 'text' } = props;
 
   return (
@@ -10,13 +11,10 @@ const Input = forwardRef(function Inp(props, ref) {
       <input
         className={styles.input}
         type={type}
-        name={name}
         id={name}
         {...props}
-        {...ref}
+        ref={ref}
       />
     </div>
   );
 });
-
-export { Input };

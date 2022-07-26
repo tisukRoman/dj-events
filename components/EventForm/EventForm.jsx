@@ -3,29 +3,23 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import styles from './EventForm.module.css';
 
-export function EventForm() {
-  const { register, handleSubmit } = useForm();
-
-  function onSubmit(data) {
-    console.log(data);
-  }
+export function EventForm({ onSubmit }) {
+  const { register, handleSubmit } = useForm({
+    mode: 'onBlur',
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div className={styles.flex}>
         <div className={styles.column}>
-          <Input name='event_name' title='Event Name' {...register('name')} />
-          <Input name='venue' title='Venue' {...register('venue')} />
-          <Input name='date' title='Date' type='date' {...register('date')} />
+          <Input title='Event Name' {...register('name')} />
+          <Input title='Venue' {...register('venue')} />
+          <Input title='Date' type='date' {...register('date')} />
         </div>
         <div className={styles.column}>
-          <Input
-            name='performers'
-            title='Performers'
-            {...register('performers')}
-          />
-          <Input name='address' title='Address' {...register('address')} />
-          <Input name='time' title='Time' {...register('time')} />
+          <Input title='Performers' {...register('performers')} />
+          <Input title='Address' {...register('address')} />
+          <Input title='Time' {...register('time')} />
         </div>
       </div>
       <div>
@@ -33,7 +27,6 @@ export function EventForm() {
         <textarea
           className={styles.textarea}
           type='text'
-          name='description'
           id='description'
           {...register('description')}
         ></textarea>

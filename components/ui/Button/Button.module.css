@@ -1,6 +1,5 @@
 .button {
   font-size: 1.2rem;
-  padding: 0 1em;
   width: 100%;
   display: block;
   height: 3em;
@@ -34,11 +33,10 @@
   color: #6495ed;
 }
 
-
-.outlined_blue:hover{
+.outlined_blue:hover {
   background-color: antiquewhite;
 }
 
-.outlined_red:hover{
+.outlined_red:hover {
   background-color: antiquewhite;
 }

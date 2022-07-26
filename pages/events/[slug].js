@@ -13,7 +13,7 @@ import { BackButton } from '@/components/BackButton';
 import styles from '@/styles/EventDetails.module.css';
 
 export default function EventDetails({ event }) {
-  const { date, time, name, image, performers, description, venue, address } =
+  const { date, time, name, image, performers, description, venue, address, slug } =
     event.attributes;
 
   const router = useRouter();
@@ -30,12 +30,16 @@ export default function EventDetails({ event }) {
     }
   }
 
+  function onEdit() {
+    router.push(`/events/edit/${slug}`);
+  }
+
   return (
     <Layout>
       <div className={styles.page}>
         <div className={styles.button_group}>
           <div className={styles.button}>
-            <Button variant='outlined' color='blue'>
+            <Button onClick={onEdit} variant='outlined' color='blue'>
               <AiFillEdit /> Edit Event
             </Button>
           </div>

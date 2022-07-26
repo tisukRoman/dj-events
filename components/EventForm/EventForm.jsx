@@ -16,7 +16,7 @@ const validationSchema = yup.object({
   description: yup.string(),
 });
 
-export function EventForm({ onSubmit }) {
+export function EventForm({ onSubmit, defaultValues }) {
   const {
     register,
     handleSubmit,
@@ -24,6 +24,7 @@ export function EventForm({ onSubmit }) {
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(validationSchema),
+    defaultValues
   });
 
   return (

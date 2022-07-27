@@ -11,23 +11,34 @@ import { PageTitle } from '@/components/ui/PageTitle';
 export default function AddEventPage() {
   const router = useRouter();
 
-  async function onSubmit(data) {
-    data.slug = generateSlug(data.name);
+  async function onSubmit(values) {
+    values.slug = generateSlug(values.name);
+
+    const data = {};
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'image') {
+        formData.append('files.image', value[0], value[0].name);
+      } else {
+        data[key] = value;
+      }
+    });
+
+    formData.append('data', JSON.stringify(data));
 
     const res = await fetch(`${API_URL}/api/events`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
+      body: formData,
     });
 
     if (!res.ok) {
-      alert('Event with such name already exists');
-    } else {
-      const { data } = await res.json();
-      router.push(`/events/${data.attributes.slug}`);
+      alert('Item with such name already exists, please change it a little');
+      return;
     }
+
+    const { data: event } = await res.json();
+    router.push(`/events/${event.attributes.slug}`);
   }
 
   return (

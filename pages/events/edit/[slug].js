@@ -6,37 +6,48 @@ import { EventForm } from '@/components/EventForm';
 import { Layout } from '@/components/Layout';
 import { PageTitle } from '@/components/ui/PageTitle';
 
-export default function EditEventPage({ event }) {
+export default function EditEventPage(props) {
   const router = useRouter();
 
-  async function onSubmit(data) {
-    const { slug, name, venue, address, date, time, description } = data;
-    const submitData = {
-      data: { slug, name, venue, address, date, time, description },
-    };
+  async function onSubmit(values) {
+    const data = {};
+    const formData = new FormData();
 
-    const res = await fetch(`${API_URL}/api/events/${String(event.id)}`, {
+    console.log(values);
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === 'image') {
+        if(Array.isArray(value) && value.length){
+          formData.append('files.image', value[0], value[0].name);
+        }else{
+          return;
+        }
+      } else {
+        data[key] = value;
+      }
+    });
+
+    formData.append('data', JSON.stringify(data));
+
+    const res = await fetch(`${API_URL}/api/events/${String(props.event.id)}`, {
       method: 'PUT',
-      body: JSON.stringify(submitData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      body: formData,
     });
 
     if (!res.ok) {
-      alert('Some error occured');
-    } else {
-      const data = await res.json();
-      console.log(data);
-      router.push(`/events`);
+      alert('Could not update the event');
+      return;
     }
+
+    const { data: event } = await res.json();
+    router.push(`/events/${event.attributes.slug}`);
   }
 
   return (
     <Layout>
       <BackButton />
       <PageTitle>Edit Event</PageTitle>
-      <EventForm onSubmit={onSubmit} defaultValues={event.attributes} />
+      <EventForm onSubmit={onSubmit} defaultValues={props.event.attributes} />
     </Layout>
   );
 }

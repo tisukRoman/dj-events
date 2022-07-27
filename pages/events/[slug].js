@@ -23,11 +23,12 @@ export default function EventDetails({ event }) {
       method: 'DELETE',
     });
 
-    if (res.ok) {
-      router.push('/events');
-    } else {
+    if (!res.ok) {
       alert('Could not delete this event');
-    }
+      return;
+    } 
+
+    router.push('/events');
   }
 
   function onEdit() {

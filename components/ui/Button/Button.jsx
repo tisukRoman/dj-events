@@ -13,6 +13,7 @@ export function Button(props) {
     variant = 'filled',
     color = 'red',
     type = 'button',
+    disabled = false,
   } = props;
 
   const styleKey = `${variant}-${color}`;
@@ -21,6 +22,7 @@ export function Button(props) {
     <button
       className={`${styles.button} ${styleMap[styleKey]}`}
       type={type}
+      disabled={disabled}
       {...props}
     >
       {children}

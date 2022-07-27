@@ -1,0 +1,11 @@
+.flex {
+  margin-top: 5em;
+  width: 20em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex *{
+    margin-right: 2em;
+}

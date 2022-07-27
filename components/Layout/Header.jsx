@@ -12,7 +12,7 @@ export function Header() {
       <nav>
         <ul className={styles.ul}>
           <li>
-            <Link href='/events'>Events</Link>
+            <Link href='/events/?page=1'>Events</Link>
           </li>
           <li>
             <Link href='/events/add'>Add Event</Link>

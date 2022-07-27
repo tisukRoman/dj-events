@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { API_URL } from '@/config/index';
+import { API_URL, EVENTS_PER_PAGE } from '@/config/index';
 import { Layout } from '@/components/Layout';
 import { Showcase } from '@/components/ui/Showcase';
 import { PageTitle } from '@/components/ui/PageTitle';
@@ -26,8 +26,8 @@ export async function getStaticProps() {
       populate: ['image'],
       sort: ['date'],
       pagination: {
-        start: 0,
-        limit: 3,
+        page: 1,
+        pageSize: 3,
       },
     },
     {
@@ -37,7 +37,7 @@ export async function getStaticProps() {
 
   const res = await fetch(`${API_URL}/api/events?${query}`);
   const { data } = await res.json();
-  const events = data.map(event => event.attributes);
+  const events = data.map((event) => event.attributes);
 
   return {
     props: { events },

@@ -1,10 +1,11 @@
 import qs from 'qs';
-import { API_URL } from '@/config/index';
+import { API_URL, EVENTS_PER_PAGE } from '@/config/index';
 import { EventCard } from '@/components/EventCard';
 import { Layout } from '@/components/Layout';
 import { PageTitle } from '@/components/ui/PageTitle';
+import { PagesNavigation } from '@/components/PagesNavigation';
 
-export default function EventsPage({ events }) {
+export default function EventsPage({ events, total, page }) {
   return (
     <Layout>
       <PageTitle>Events</PageTitle>
@@ -13,19 +14,25 @@ export default function EventsPage({ events }) {
           <EventCard key={event.slug} event={event} />
         ))}
       </div>
+      <PagesNavigation
+        currentPage={Number(page)}
+        lastPage={Math.ceil(total / EVENTS_PER_PAGE)}
+      />
     </Layout>
   );
 }
 
-export async function getStaticProps() {
-  const query = qs.stringify(
+export async function getServerSideProps(ctx) {
+  const { page } = ctx.query;
+
+  const queryParams = qs.stringify(
     {
       fields: ['slug', 'name', 'date', 'time'],
       populate: ['image'],
       sort: ['date'],
       pagination: {
-        start: 0,
-        limit: 10,
+        pageSize: EVENTS_PER_PAGE,
+        page,
       },
     },
     {
@@ -33,12 +40,14 @@ export async function getStaticProps() {
     }
   );
 
-  const res = await fetch(`${API_URL}/api/events?${query}`);
+  const res = await fetch(`${API_URL}/api/events?${queryParams}`);
   const { data } = await res.json();
   const events = data.map((event) => event.attributes);
 
+  const totalEventsCount = await fetch(`${API_URL}/api/events/count`);
+  const total = await totalEventsCount.json();
+
   return {
-    props: { events },
-    revalidate: 1,
+    props: { events, total, page },
   };
 }

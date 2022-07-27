@@ -1,0 +1,1 @@
+export { PagesNavigation } from './PagesNavigation';

@@ -28,17 +28,17 @@ export const FileInput = ({ control, name }) => {
               </div>
             )}
           </Dropzone>
-          {value && (
+          {value.length ? (
             <div className={styles.uploaded_file}>
               <div className={styles.file_icon}>
-                <FaFileAlt/>
+                <FaFileAlt />
               </div>
               <div>
                 <div>{value[0].name}</div>
                 <div>{value[0].size}</div>
               </div>
             </div>
-          )}
+          ) : null}
         </>
       )}
     />

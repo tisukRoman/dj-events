@@ -1,6 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { generateSlug } from 'helpers/generateSulg';
 import { API_URL } from '@/config/index';
 import { BackButton } from '@/components/BackButton';
 import { EventForm } from '@/components/EventForm';
@@ -11,33 +12,21 @@ export default function AddEventPage() {
   const router = useRouter();
 
   async function onSubmit(data) {
-    debugger;
-    data.slug = data.name.toLowerCase().split(' ').join('-');
-
-    const textEntries = Object.entries(data).filter(
-      ([key, v]) => key !== 'image'
-    );
-
-    const formData = new FormData();
-
-    formData.append('image', data.image);
-
-    textEntries.forEach(([key, value]) => formData.append(key, value));
+    data.slug = generateSlug(data.name);
 
     const res = await fetch(`${API_URL}/api/events`, {
       method: 'POST',
-      body: JSON.stringify({data: formData}),
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ data }),
     });
 
     if (!res.ok) {
-      alert('Some error occured');
+      alert('Event with such name already exists');
     } else {
-      const data = await res.json();
-      console.log(data);
-      router.push(`/events`);
+      const { data } = await res.json();
+      router.push(`/events/${data.attributes.slug}`);
     }
   }
 

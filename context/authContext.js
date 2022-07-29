@@ -4,9 +4,16 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [confirmError, setConfirmError] = useState(null);
 
   const register = (data) => {
-    console.log(data);
+    setConfirmError(null);
+    const { username, email, password, confirmPassword } = data;
+    if (password !== confirmPassword) {
+      setConfirmError(`Passwords don't match`);
+      return;
+    }
+    console.log({username, email, password});
   };
 
   const login = ({ username: identifier, password }) => {
@@ -18,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, confirmError, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

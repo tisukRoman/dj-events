@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import Link from 'next/link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'hooks/useAuth';
@@ -7,7 +8,6 @@ import { PageTitle } from '@/components/ui/PageTitle';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import styles from './login.module.css';
-import Link from 'next/link';
 
 const loginSchema = yup.object({
   username: yup.string().required('Required'),

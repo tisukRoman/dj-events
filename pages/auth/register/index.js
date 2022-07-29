@@ -1,8 +1,8 @@
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useAuth } from 'hooks/useAuth';
 import { Layout } from '@/components/Layout';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { Input } from '@/components/ui/Input';
@@ -29,23 +29,16 @@ export default function RegisterPage() {
     resolver: yupResolver(registerSchema),
   });
 
-  const [confirmError, setConfirmError] = useState(null);
-
-  function onSubmit(data) {
-    setConfirmError(null);
-    const { username, email, password, confirmPassword } = data;
-    if (password !== confirmPassword) {
-      setConfirmError(`Passwords don't match`);
-    } else {
-      console.log({ username, email, password });
-    }
-  }
+  const { register: registerSubmit, confirmError } = useAuth();
 
   return (
     <Layout title='registration'>
       <div className={styles.formCard}>
         <PageTitle>Registration</PageTitle>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
+        <form
+          onSubmit={handleSubmit(registerSubmit)}
+          className={styles.registerForm}
+        >
           <Input
             {...register('username')}
             title='User Name'

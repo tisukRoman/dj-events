@@ -1,9 +1,10 @@
-import { forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 import styles from './Input.module.css';
 
 /* eslint-disable */
 export const Input = forwardRef((props, ref) => {
   const { name, title, type = 'text', error = false, helpertext } = props;
+  const id = useId();
 
   return (
     <div className={styles.input_wrapper}>
@@ -13,7 +14,7 @@ export const Input = forwardRef((props, ref) => {
       <input
         className={`${styles.input} ${error && styles.error_input}`}
         type={type}
-        id={name}
+        id={id + name}
         {...props}
         ref={ref}
       />

@@ -48,7 +48,7 @@ export default function LoginPage() {
           <Button type='submit'>Login</Button>
         </form>
         <p className={styles.redirectText}>
-          don't have account? <Link href='/auth/register'>Sign up</Link> then
+          {`don't have account?`} <Link href='/auth/register'>Sign up</Link> then
         </p>
       </div>
     </Layout>

@@ -5,8 +5,6 @@ import styles from './PagesNavigation.module.css';
 export function PagesNavigation({ currentPage, lastPage }) {
   const router = useRouter();
 
-  console.log(currentPage, lastPage);
-
   function moveLeft() {
     router.push(`/events/?page=${currentPage - 1}`);
   }

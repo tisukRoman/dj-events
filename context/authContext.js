@@ -1,19 +1,28 @@
 import { createContext, useState } from 'react';
+import { API_URL } from '@/config/index';
+import { registerUser } from 'apiHelpers/registerUser';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const [confirmError, setConfirmError] = useState(null);
+  const [error, setError] = useState(null);
 
-  const register = (data) => {
-    setConfirmError(null);
+  const register = async (data) => {
+    setError(null);
     const { username, email, password, confirmPassword } = data;
+
     if (password !== confirmPassword) {
-      setConfirmError(`Passwords don't match`);
+      setError({
+        type: 'password confirming',
+        message: `Passwords don't match`,
+      });
       return;
     }
-    console.log({username, email, password});
+
+    const res = await registerUser({ username, email, password });
+
+    console.log(res);
   };
 
   const login = ({ username: identifier, password }) => {
@@ -25,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, confirmError, register, login, logout }}>
+    <AuthContext.Provider value={{ user, error, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

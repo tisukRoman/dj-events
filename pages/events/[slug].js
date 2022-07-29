@@ -1,10 +1,13 @@
-import qs from 'qs';
+import {
+  getAllEventsPaths,
+  getEventBySlug,
+  deleteEvent,
+} from '@/apiHelpers/index';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { localeDate } from 'helpers/localeDate';
 import { getImgUrl } from 'helpers/getImgUrl';
-import { API_URL } from '@/config/index';
 import { Layout } from '@/components/Layout';
 import { InfoItem } from '@/components/ui/InfoItem';
 import { Button } from '@/components/ui/Button';
@@ -13,22 +16,23 @@ import { BackButton } from '@/components/BackButton';
 import styles from '@/styles/EventDetails.module.css';
 
 export default function EventDetails({ event }) {
-  const { date, time, name, image, performers, description, venue, address, slug } =
-    event.attributes;
-
+  const {
+    date,
+    time,
+    name,
+    image,
+    performers,
+    description,
+    venue,
+    address,
+    slug,
+  } = event.attributes;
+  
   const router = useRouter();
 
   async function onDelete() {
-    const res = await fetch(`${API_URL}/api/events/${event.id}`, {
-      method: 'DELETE',
-    });
-
-    if (!res.ok) {
-      alert('Could not delete this event');
-      return;
-    } 
-
-    router.push('/events');
+    await deleteEvent(event.id);
+    router.back();
   }
 
   function onEdit() {
@@ -74,38 +78,17 @@ export default function EventDetails({ event }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/events`);
-  const { data: events } = await res.json();
-
-  const paths = events.map((e) => ({
-    params: { slug: e.attributes.slug },
-  }));
-
+  const paths = await getAllEventsPaths();
   return {
     paths,
     fallback: false,
   };
 }
 
-export async function getStaticProps(ctx) {
-  const { slug } = ctx.params;
-
-  const query = qs.stringify(
-    {
-      populate: '*',
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  const res = await fetch(
-    `${API_URL}/api/slugify/slugs/event/${slug}?${query}`
-  );
-  const { data } = await res.json();
-
+export async function getStaticProps({ params }) {
+  const event = await getEventBySlug(params.slug);
   return {
-    props: { event: data },
-    revalidate: 1,
+    props: { event },
+    revalidate: 10,
   };
 }

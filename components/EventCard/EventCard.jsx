@@ -21,8 +21,8 @@ export function EventCard({ event }) {
           src={getImgUrl(image, 'thumbnail', '/images/event-default.png')}
           alt='Picture of the Event'
           width={300}
-          height={200}
-          objectFit
+          height={180}
+          objectFit='cover'
         />
       </div>
       <div className={styles.info}>

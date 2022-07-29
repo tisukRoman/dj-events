@@ -1,5 +1,4 @@
-import qs from 'qs';
-import { API_URL, EVENTS_PER_PAGE } from '@/config/index';
+import { getUpcomingEvents } from '@/apiHelpers/index';
 import { Layout } from '@/components/Layout';
 import { Showcase } from '@/components/ui/Showcase';
 import { PageTitle } from '@/components/ui/PageTitle';
@@ -20,24 +19,7 @@ export default function HomePage({ events }) {
 }
 
 export async function getStaticProps() {
-  const query = qs.stringify(
-    {
-      fields: ['slug', 'name', 'date', 'time'],
-      populate: ['image'],
-      sort: ['date'],
-      pagination: {
-        page: 1,
-        pageSize: 3,
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  );
-
-  const res = await fetch(`${API_URL}/api/events?${query}`);
-  const { data } = await res.json();
-  const events = data.map((event) => event.attributes);
+  const events = await getUpcomingEvents();
 
   return {
     props: { events },

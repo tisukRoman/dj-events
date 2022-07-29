@@ -1,6 +1,6 @@
 import { API_URL } from '@/config/index';
 
-export const registerUser = async (body) => {
+export const loginUser = async (body) => {
   try {
     console.log(body);
 
@@ -10,7 +10,7 @@ export const registerUser = async (body) => {
       formData.append(key, value);
     });
 
-    const res = await fetch(`${API_URL}/api/auth/local/register`, {
+    const res = await fetch(`${API_URL}/api/auth/local`, {
       method: 'POST',
       body: formData,
     });

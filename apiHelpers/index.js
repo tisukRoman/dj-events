@@ -1,5 +1,6 @@
 export { getUpcomingEvents } from './getUpcomingEvents';
 export { registerUser } from './registerUser';
+export { loginUser } from './loginUser';
 export { getEventsOnPage } from './getEventsOnPage';
 export { getTotalEventsCount } from './getTotalEventsCount';
 export { getAllEventsPaths } from './getAllEventsPaths';

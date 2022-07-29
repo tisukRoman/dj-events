@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { API_URL } from '@/config/index';
 import { registerUser } from 'apiHelpers/registerUser';
+import { loginUser } from '../apiHelpers';
 
 export const AuthContext = createContext();
 
@@ -8,9 +9,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [error, setError] = useState(null);
 
-  const register = async (data) => {
+  const register = async (values) => {
     setError(null);
-    const { username, email, password, confirmPassword } = data;
+    const { username, email, password, confirmPassword } = values;
 
     if (password !== confirmPassword) {
       setError({
@@ -20,13 +21,14 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    const res = await registerUser({ username, email, password });
-
-    console.log(res);
+    const data = await registerUser({ username, email, password });
+    console.log(data);
   };
 
-  const login = ({ username: identifier, password }) => {
-    console.log({ identifier, password });
+  const login = async ({ username: identifier, password }) => {
+    setError(null);
+    const data = await loginUser({ identifier, password });
+    console.log(data);
   };
 
   const logout = () => {

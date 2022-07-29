@@ -1,0 +1,15 @@
+.formCard {
+  width: 30em;
+  margin: 4em auto;
+  text-align: center;
+}
+
+.loginForm {
+  margin-top: 2em;
+  text-align: left;
+}
+
+.redirectText {
+  margin-top: 2em;
+  font-size: 1.2rem;
+}

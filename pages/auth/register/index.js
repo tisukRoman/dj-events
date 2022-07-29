@@ -77,7 +77,7 @@ export default function RegisterPage() {
           <Button type='submit'>Sign Up</Button>
         </form>
         <p className={styles.redirectText}>
-          Have an account already? <Link href='/user/login'>Login</Link> then
+          Have an account already? <Link href='/auth/login'>Login</Link> then
         </p>
       </div>
     </Layout>

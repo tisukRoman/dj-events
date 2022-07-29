@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { useAuth } from 'hooks/useAuth';
 import { Layout } from '@/components/Layout';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { Input } from '@/components/ui/Input';
@@ -23,15 +24,13 @@ export default function LoginPage() {
     resolver: yupResolver(loginSchema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
-  }
+  const { login } = useAuth();
 
   return (
     <Layout title='login'>
       <div className={styles.formCard}>
         <PageTitle>Login</PageTitle>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+        <form onSubmit={handleSubmit(login)} className={styles.loginForm}>
           <Input
             {...register('username')}
             title='User Name'
@@ -49,7 +48,7 @@ export default function LoginPage() {
           <Button type='submit'>Login</Button>
         </form>
         <p className={styles.redirectText}>
-          don't have account? <Link href='/user/register'>Sign up</Link> then
+          don't have account? <Link href='/auth/register'>Sign up</Link> then
         </p>
       </div>
     </Layout>

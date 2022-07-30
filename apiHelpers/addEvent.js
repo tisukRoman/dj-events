@@ -3,7 +3,6 @@ import { API_URL } from '@/config/index';
 
 export const addEvent = async (values) => {
   try {
-    debugger;
     values.slug = generateSlug(values.name);
 
     const data = {};
@@ -17,11 +16,14 @@ export const addEvent = async (values) => {
       }
     });
 
-    formData.append('data', JSON.stringify(data));
+    formData.append('data', JSON.stringify(data));    
 
     const res = await fetch(`${API_URL}/api/events`, {
       method: 'POST',
       body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
 
     return res;

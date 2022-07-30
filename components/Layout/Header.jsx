@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { useAuth } from 'hooks/useAuth';
 import { SearchBar } from '../SearchBar';
 import styles from './styles/Header.module.css';
 
 export function Header() {
+  const { user, logout } = useAuth();
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -14,9 +17,20 @@ export function Header() {
           <li>
             <Link href='/events/?page=1'>Events</Link>
           </li>
-          <li>
-            <Link href='/events/add'>Add Event</Link>
-          </li>
+          {user ? (
+            <>
+              <li>
+                <Link href='/events/add'>Add Event</Link>
+              </li>
+              <li onClick={logout}>
+                <Link href='/'>Logout</Link>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link href='/auth/login'>Login</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

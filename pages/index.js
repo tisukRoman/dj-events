@@ -5,6 +5,7 @@ import { PageTitle } from '@/components/ui/PageTitle';
 import { EventCard } from '@/components/EventCard';
 
 export default function HomePage({ events }) {
+
   return (
     <Layout>
       <Showcase />

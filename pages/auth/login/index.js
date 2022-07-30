@@ -1,5 +1,8 @@
 import * as yup from 'yup';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'hooks/useAuth';
@@ -24,10 +27,15 @@ export default function LoginPage() {
     resolver: yupResolver(loginSchema),
   });
 
-  const { login } = useAuth();
+  const { login, error } = useAuth();
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   return (
     <Layout title='login'>
+      <ToastContainer />
       <div className={styles.formCard}>
         <PageTitle>Login</PageTitle>
         <form onSubmit={handleSubmit(login)} className={styles.loginForm}>
@@ -48,7 +56,8 @@ export default function LoginPage() {
           <Button type='submit'>Login</Button>
         </form>
         <p className={styles.redirectText}>
-          {`don't have account?`} <Link href='/auth/register'>Sign up</Link> then
+          {`don't have account?`} <Link href='/auth/register'>Sign up</Link>{' '}
+          then
         </p>
       </div>
     </Layout>

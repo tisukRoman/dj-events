@@ -1,38 +1,38 @@
 import { createContext, useState } from 'react';
-import { API_URL } from '@/config/index';
-import { registerUser } from 'apiHelpers/registerUser';
-import { loginUser } from '../apiHelpers';
+import { loginUser, registerUser } from '@/apiHelpers/index';
+import { useRouter } from 'next/router';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const register = async (values) => {
-    setError(null);
     const { username, email, password, confirmPassword } = values;
-
     if (password !== confirmPassword) {
-      setError({
-        type: 'password confirming',
-        message: `Passwords don't match`,
-      });
+      setError('Passwords don`t match');
       return;
     }
-
     const data = await registerUser({ username, email, password });
     console.log(data);
   };
 
   const login = async ({ username: identifier, password }) => {
     setError(null);
-    const data = await loginUser({ identifier, password });
-    console.log(data);
+    const res = await loginUser({ identifier, password });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data?.error);
+    } else {
+      setUser(data.user);
+      router.push('/');
+    }
   };
 
   const logout = () => {
-    console.log('Logout');
+    setUser(null);
   };
 
   return (
@@ -40,4 +40,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}

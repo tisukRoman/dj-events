@@ -1,4 +1,5 @@
 import { API_URL } from '@/config/index';
+import cookie from 'cookie';
 
 export default async function login(req, res) {
   if (req.method === 'POST') {
@@ -12,13 +13,23 @@ export default async function login(req, res) {
       });
       const data = await strapiRes.json();
       if (strapiRes.ok) {
-        // TODO -- Set HttpOnly Cookie
+        // Set Cookie
+        res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('token', data.jwt, {
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV !== 'development',
+            masAge: 60 * 60 * 24 * 7, // 1 week
+            path: '/',
+          })
+        );
         res.status(200).json({ user: data.user });
       } else {
         res.status(data.statusCode).json({ message: data?.error?.message });
       }
     } catch (err) {
-      res.status(500).json({ error: 'failed to login' });
+      res.status(500).json({ message: 'Failed to login' });
     }
   } else {
     res.setHeader('Allow', ['POST']);

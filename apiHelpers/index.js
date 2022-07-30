@@ -9,3 +9,5 @@ export { deleteEvent } from './deleteEvent';
 export { editEvent } from './editEvent';
 export { addEvent } from './addEvent';
 export { searchEvents } from './searchEvents';
+export { checkUserLoggedIn } from './checkUserLoggedIn';
+export { logoutUser } from './logoutUser';

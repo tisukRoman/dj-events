@@ -20,7 +20,7 @@ export function Header() {
           {user ? (
             <>
               <li>
-                <Link href='/events/add'>Add Event</Link>
+                <Link href='/dashboard'>Dashboard</Link>
               </li>
               <li onClick={logout}>
                 <Link href='/'>Logout</Link>

@@ -13,7 +13,7 @@ import { InfoItem } from '@/components/ui/InfoItem';
 import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { BackButton } from '@/components/BackButton';
-import styles from '@/styles/EventDetails.module.css';
+import styles from './EventDetails.module.css';
 
 export default function EventDetails({ event }) {
   const {
@@ -27,7 +27,7 @@ export default function EventDetails({ event }) {
     address,
     slug,
   } = event.attributes;
-  
+
   const router = useRouter();
 
   async function onDelete() {

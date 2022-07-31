@@ -1,5 +1,5 @@
 import { getUpcomingEvents } from '@/apiHelpers/index';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Layout } from '@/components/Layout';
@@ -10,10 +10,11 @@ import { useAuth } from 'hooks/useAuth';
 
 export default function HomePage({ events }) {
   const { user } = useAuth();
+  const toastId = useRef(null);
 
   useEffect(() => {
-    if (user) {
-      toast.success(`Logged in as ${user.username}`);
+    if (user && !toast.isActive(toastId.current)) {
+      toastId.current = toast.success(`Logged in as ${user.username}`);
       toast.clearWaitingQueue();
     }
   }, [user]);

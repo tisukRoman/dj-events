@@ -11,3 +11,4 @@ export { addEvent } from './addEvent';
 export { searchEvents } from './searchEvents';
 export { checkUserLoggedIn } from './checkUserLoggedIn';
 export { logoutUser } from './logoutUser';
+export { getUserInfo } from './getUserInfo';

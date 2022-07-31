@@ -1,24 +1,27 @@
-import { parseCookie } from 'helpers/parseCookie';
-import { getUserInfo } from '@/apiHelpers/getUserInfo';
 import { EventCard } from '@/components/EventCard';
 import { Layout } from '@/components/Layout';
+import { PageTitle } from '@/components/ui/PageTitle';
+import { useAuth } from 'hooks/useAuth';
+import styles from './Dashboard.module.css';
 
-export default function Dashboard({ user }) {
+export default function Dashboard() {
+  const { user } = useAuth();
+
+  if (!user) {
+    <Layout>
+      <div>Not Authenticated</div>
+    </Layout>;
+  }
+
   return (
     <Layout>
+      <PageTitle>{user.username}</PageTitle>
+      <h2>Your Events:</h2>
       <div className='event_list'>
-        {user?.events.map((event) => (
+        {user?.events?.map((event) => (
           <EventCard key={event.slug} event={event} />
         ))}
       </div>
     </Layout>
   );
-}
-
-export async function getServerSideProps({ req }) {
-  const { token } = parseCookie(req.headers.cookie);
-  const user = await getUserInfo(token);
-  return {
-    props: { user },
-  };
 }

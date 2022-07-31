@@ -1,5 +1,8 @@
 import * as yup from 'yup';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'hooks/useAuth';
@@ -29,10 +32,15 @@ export default function RegisterPage() {
     resolver: yupResolver(registerSchema),
   });
 
-  const { register: registerSubmit, confirmError } = useAuth();
+  const { register: registerSubmit, error } = useAuth();
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   return (
     <Layout title='registration'>
+      <ToastContainer />
       <div className={styles.formCard}>
         <PageTitle>Registration</PageTitle>
         <form
@@ -64,8 +72,8 @@ export default function RegisterPage() {
             {...register('confirmPassword')}
             title='Confirm Password'
             type='password'
-            error={errors.confirmPassword || confirmError}
-            helpertext={errors?.confirmPassword?.message || confirmError}
+            error={errors.confirmPassword}
+            helpertext={errors?.confirmPassword?.message}
           />
           <Button type='submit'>Sign Up</Button>
         </form>

@@ -10,15 +10,29 @@ import { useRouter } from 'next/router';
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    const isLoggedIn = async () => {
+      setLoading(true);
+      const res = await checkUserLoggedIn();
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data.user);
+        router.push('/');
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    };
     isLoggedIn();
   }, []);
 
   const register = async (values) => {
+    setLoading(true);
     setError(null);
     const { username, email, password, confirmPassword } = values;
     if (password !== confirmPassword) {
@@ -33,9 +47,11 @@ export function AuthProvider({ children }) {
     } else {
       setError(data?.message);
     }
+    setLoading(false);
   };
 
   const login = async ({ username: identifier, password }) => {
+    setLoading(true);
     setError(null);
     const res = await loginUser({ identifier, password });
     const data = await res.json();
@@ -45,20 +61,11 @@ export function AuthProvider({ children }) {
     } else {
       setError(data?.message || data?.error);
     }
-  };
-
-  const isLoggedIn = async () => {
-    const res = await checkUserLoggedIn();
-    const data = await res.json();
-    if (res.ok) {
-      setUser(data.user);
-      router.push('/');
-    } else {
-      setUser(null);
-    }
+    setLoading(false);
   };
 
   const logout = async () => {
+    setLoading(true);
     const res = await logoutUser();
     if (res.ok) {
       setUser(null);
@@ -67,10 +74,13 @@ export function AuthProvider({ children }) {
       const data = await res.json();
       setError(data?.message);
     }
+    setLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, error, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, error, loading, register, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

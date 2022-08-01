@@ -11,9 +11,11 @@ import { useAuth } from 'hooks/useAuth';
 export default function HomePage({ events }) {
   const { user } = useAuth();
   const toastId = useRef(null);
+  const render = useRef(true);
 
   useEffect(() => {
-    if (user && !toast.isActive(toastId.current)) {
+    if (user && render.current && !toast.isActive(toastId.current)) {
+      render.current = false;
       toastId.current = toast.success(`Logged in as ${user.username}`);
       toast.clearWaitingQueue();
     }
@@ -21,7 +23,7 @@ export default function HomePage({ events }) {
 
   return (
     <Layout>
-      <ToastContainer autoClose={2000} limit={1} />
+      <ToastContainer autoClose={2000} />
       <Showcase />
       <PageTitle>Upcoming Events</PageTitle>
       <div className='event_list'>

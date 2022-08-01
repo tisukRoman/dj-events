@@ -22,14 +22,14 @@ export function AuthProvider({ children }) {
       const data = await res.json();
       if (res.ok) {
         setUser(data.user);
-        router.push('/');
+        // router.push('/');
       } else {
         setUser(null);
       }
       setLoading(false);
     };
     isLoggedIn();
-  }, []);
+  }, [user]);
 
   const register = async (values) => {
     setLoading(true);
@@ -78,9 +78,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, error, loading, register, login, logout }}
-    >
+    <AuthContext.Provider value={{ user, error, loading, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

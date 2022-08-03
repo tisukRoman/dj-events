@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <PageTitle>{user.username}</PageTitle>
+      <PageTitle>{user?.username}</PageTitle>
       <h2>Your Events:</h2>
       <div className='event_list'>
         {user?.events?.map((event) => (

@@ -4,15 +4,14 @@ import {
   deleteEvent,
 } from '@/apiHelpers/index';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { localeDate } from 'helpers/localeDate';
 import { getImgUrl } from 'helpers/getImgUrl';
 import { Layout } from '@/components/Layout';
 import { InfoItem } from '@/components/ui/InfoItem';
-import { Button } from '@/components/ui/Button';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { BackButton } from '@/components/BackButton';
+import { NavLink } from '@/components/ui/NavLink';
 import styles from './EventDetails.module.css';
 
 export default function EventDetails({ event }) {
@@ -28,15 +27,8 @@ export default function EventDetails({ event }) {
     slug,
   } = event.attributes;
 
-  const router = useRouter();
-
   async function onDelete() {
     await deleteEvent(event.id);
-    router.back();
-  }
-
-  function onEdit() {
-    router.push(`/events/edit/${slug}`);
   }
 
   return (
@@ -44,14 +36,14 @@ export default function EventDetails({ event }) {
       <div className={styles.page}>
         <div className={styles.button_group}>
           <div className={styles.button}>
-            <Button onClick={onEdit} variant='outlined' color='blue'>
+            <NavLink href={`/events/edit/${slug}`} color='blue'>
               <AiFillEdit /> Edit Event
-            </Button>
+            </NavLink>
           </div>
           <div className={styles.button}>
-            <Button onClick={onDelete} variant='outlined' color='red'>
+            <NavLink onClick={onDelete} href={`/events/?page=1`} color='red'>
               <AiFillDelete /> Delete Event
-            </Button>
+            </NavLink>
           </div>
         </div>
         <div>

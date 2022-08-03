@@ -1,9 +1,9 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { getImgUrl } from 'helpers/getImgUrl';
 import { localeDate } from 'helpers/localeDate';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { Button } from '../ui/Button';
 import styles from './EventCard.module.css';
+import { Button } from '../ui/Button';
 
 export function EventCard({ event }) {
   const { slug, image, name, date, time } = event;

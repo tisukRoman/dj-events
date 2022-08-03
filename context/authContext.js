@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
       setLoading(false);
     };
     isLoggedIn();
-  }, [user]);
+  }, []);
 
   const register = async (values) => {
     setLoading(true);
@@ -68,8 +68,8 @@ export function AuthProvider({ children }) {
     setLoading(true);
     const res = await logoutUser();
     if (res.ok) {
+      router.replace('/');
       setUser(null);
-      router.push('/');
     } else {
       const data = await res.json();
       setError(data?.message);
@@ -78,7 +78,9 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, error, loading, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, error, loading, register, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

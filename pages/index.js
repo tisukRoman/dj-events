@@ -7,8 +7,12 @@ import { Showcase } from '@/components/ui/Showcase';
 import { PageTitle } from '@/components/ui/PageTitle';
 import { EventCard } from '@/components/EventCard';
 import { useAuth } from 'hooks/useAuth';
+import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
+import { useRouter } from 'next/router';
 
 export default function HomePage({ events }) {
+  const router = useRouter();
   const { user } = useAuth();
   const toastId = useRef(null);
   const render = useRef(true);
@@ -31,6 +35,11 @@ export default function HomePage({ events }) {
           <EventCard key={event.slug} event={event} />
         ))}
       </div>
+      <Link href='/events/?page=1'>
+        <div style={{ margin: '2em auto', maxWidth: '15em' }}>
+          <Button>View all events</Button>
+        </div>
+      </Link>
     </Layout>
   );
 }

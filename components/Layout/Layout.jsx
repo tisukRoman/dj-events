@@ -13,6 +13,7 @@ export function Layout(props) {
         <title>{title}</title>
         <meta name='description' content={description} />
         <meta name='keywords' content={keywords} />
+        <link rel='icon' type='image/x-icon' href='/favicon.ico' />
       </Head>
       <div className={styles.container}>
         <Header />

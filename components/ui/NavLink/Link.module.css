@@ -1,0 +1,21 @@
+.link {
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.red {
+  color: rgb(255, 25, 0);
+}
+
+.blue {
+  color: rgb(0, 136, 255);
+}
+
+.disabled {
+  opacity: 0.5;
+}

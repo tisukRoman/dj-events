@@ -41,11 +41,11 @@ export default function RegisterPage() {
   return (
     <Layout title='registration'>
       <ToastContainer />
-      <div className={styles.formCard}>
+      <div className='formCard'>
         <PageTitle>Registration</PageTitle>
         <form
           onSubmit={handleSubmit(registerSubmit)}
-          className={styles.registerForm}
+          className='form'
         >
           <Input
             {...register('username')}

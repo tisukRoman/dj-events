@@ -33,12 +33,16 @@ export default function LoginPage() {
     error && toast.error(error);
   }, [error]);
 
+  function onPasswordSend() {
+    console.log('Send password');
+  }
+
   return (
     <Layout title='login'>
       <ToastContainer />
       <div className={styles.formCard}>
         <PageTitle>Login</PageTitle>
-        <form onSubmit={handleSubmit(login)} className={styles.loginForm}>
+        <form onSubmit={handleSubmit(login)} className='form'>
           <Input
             {...register('username')}
             title='User Name'
@@ -55,6 +59,13 @@ export default function LoginPage() {
           />
           <Button type='submit'>Login</Button>
         </form>
+        <p onClick={onPasswordSend} className={styles.redirectText}>
+          {`Forgot your password?`}{' '}
+          <Link href='/auth/info'>
+            Reset then
+          </Link>{' '}
+          then
+        </p>
         <p className={styles.redirectText}>
           {`don't have account?`} <Link href='/auth/register'>Sign up</Link>{' '}
           then

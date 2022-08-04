@@ -8,9 +8,11 @@ export default function Dashboard() {
   const { user } = useAuth();
 
   if (!user) {
-    <Layout>
-      <div>Not Authenticated</div>
-    </Layout>;
+    return (
+      <Layout>
+        <div>Not Authenticated</div>
+      </Layout>
+    );
   }
 
   return (

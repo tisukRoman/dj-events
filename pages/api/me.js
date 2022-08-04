@@ -4,8 +4,7 @@ import cookie from 'cookie';
 export default async function me(req, res) {
   if (req.method === 'GET') {
     if (!req.headers.cookie) {
-      res.status(403).json({ message: 'Not Authorized' });
-      return;
+      return res.status(403).json({ message: 'Not Authorized' });
     }
     const { token } = cookie.parse(req.headers.cookie);
     const strapiRes = await fetch(`${API_URL}/api/users/me?populate=*`, {

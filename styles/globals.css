@@ -16,7 +16,7 @@ a {
   transition: all 0.3s ease;
 }
 
-a:hover{
+a:hover {
   color: #900;
 }
 
@@ -28,9 +28,19 @@ li {
   margin: 0 auto;
 }
 
-@media (max-width: 840px){
+.formCard {
+  width: 30em;
+  margin: 4em auto;
+  text-align: center;
+}
+
+.form {
+  margin-top: 2em;
+  text-align: left;
+}
+
+@media (max-width: 840px) {
   .event_list {
-      max-width: 300px;
+    max-width: 300px;
   }
-  
 }
